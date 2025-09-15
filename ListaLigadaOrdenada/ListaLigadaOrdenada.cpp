@@ -138,10 +138,11 @@ void inserirElemento()
 		return;
 	}
 	if(anterior == NULL){
-		inicioDaLista->ponteiroParaProximoElementoDaLista = inicioDaLista;
+		novo->ponteiroParaProximoElementoDaLista = atual;
 		inicioDaLista = novo;
 	}else{
-
+		anterior->ponteiroParaProximoElementoDaLista = novo;
+		novo->ponteiroParaProximoElementoDaLista = atual;
 	}
 
 		
@@ -155,7 +156,18 @@ void excluirElemento()
 
 void buscarElemento()
 {
-
+	int valor;
+	cout << "insira um valor " << endl;
+	cin >> valor;
+	NO* aux = inicioDaLista;
+	while(aux != NULL && aux->valor < valor){
+		aux = aux->ponteiroParaProximoElementoDaLista;
+	}
+	if(aux != NULL && aux->valor == valor){
+		cout << "Elemento encontrado" << endl;
+	}else{
+		cout << "Elemnto não encontrado" << endl;
+	}
 }
 
 
