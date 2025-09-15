@@ -4,10 +4,10 @@ using namespace std;
 // definicao de tipo
 struct NO {
 	int valor;
-	NO* prox;
+	NO* ponteiroParaProximoElementoDaLista;
 };
 
-NO* primeiro = NULL;
+NO* inicioDaLista = NULL;
 
 // headers
 void menu();
@@ -70,16 +70,16 @@ void menu()
 
 void inicializar()
 {
-	// se a lista já possuir elementos
+	// se a lista jï¿½ possuir elementos
 // libera a memoria ocupada
-	NO* aux = primeiro;
+	NO* aux = inicioDaLista;
 	while (aux != NULL) {
 		NO* paraExcluir = aux;
-		aux = aux->prox;
+		aux = aux->ponteiroParaProximoElementoDaLista;
 		free(paraExcluir);
 	}
 
-	primeiro = NULL;
+	inicioDaLista = NULL;
 	cout << "Lista inicializada \n";
 
 }
@@ -87,10 +87,10 @@ void inicializar()
 void exibirQuantidadeElementos() {
 
 	int nElementos = 0;
-	NO* aux = primeiro;
+	NO* aux = inicioDaLista;
 	while (aux != NULL) {
 		nElementos++;
-		aux = aux->prox;
+		aux = aux->ponteiroParaProximoElementoDaLista;
 	}
 	cout << "Quantidade de elementos: " << nElementos << endl;
 
@@ -98,16 +98,16 @@ void exibirQuantidadeElementos() {
 
 void exibirElementos()
 {
-	if (primeiro == NULL) {
+	if (inicioDaLista == NULL) {
 		cout << "Lista vazia \n";
 		return;
 	}
 	else {
 		cout << "Elementos: \n";
-		NO* aux = primeiro;
+		NO* aux = inicioDaLista;
 		while (aux != NULL) {
 			cout << aux->valor << endl;
-			aux = aux->prox;
+			aux = aux->ponteiroParaProximoElementoDaLista;
 		}
 	}
 }
@@ -123,21 +123,29 @@ void inserirElemento()
 
 	cout << "Digite o elemento: ";
 	cin >> novo->valor;
-	novo->prox = NULL;
+	novo->ponteiroParaProximoElementoDaLista = NULL;
 
-	if (primeiro == NULL)
-	{
-		primeiro = novo;
+	NO* atual = inicioDaLista;
+	NO* anterior = NULL;
+
+	while(atual != NULL && atual->valor < novo->valor){
+		anterior = atual;			
+		atual = atual->ponteiroParaProximoElementoDaLista;
 	}
-	else
-	{
-		// procura o final da lista
-		NO* aux = primeiro;
-		while (aux->prox != NULL) {
-			aux = aux->prox;
-		}
-		aux->prox = novo;
+	if(atual != NULL && atual->valor == novo->valor){
+		cout << "Valor ja esta na lista" << endl;
+		free(novo);
+		return;
 	}
+	if(anterior == NULL){
+		inicioDaLista->ponteiroParaProximoElementoDaLista = inicioDaLista;
+		inicioDaLista = novo;
+	}else{
+
+	}
+
+		
+	
 }
 
 void excluirElemento()
