@@ -151,7 +151,28 @@ void inserirElemento()
 
 void excluirElemento()
 {
+	int valor;
+	cout << "Informe um numero para exclusao" <<endl;
+	cin >> valor; 
 
+	NO* atual = inicioDaLista;
+	NO* anterior = NULL;
+
+	while(atual != NULL && atual->valor < valor){
+		anterior = atual;			
+		atual = atual->ponteiroParaProximoElementoDaLista;
+	}
+	if (atual == NULL || atual->valor != valor){
+		cout << "Numero não encontrado" << endl;
+		return;
+	}
+	if(anterior == NULL){
+		inicioDaLista = atual->ponteiroParaProximoElementoDaLista; 
+	}else{
+		anterior->ponteiroParaProximoElementoDaLista = atual->ponteiroParaProximoElementoDaLista;
+	}
+	free(atual);
+	cout << "Elemento excluido com sucesso." << endl;
 }
 
 void buscarElemento()
